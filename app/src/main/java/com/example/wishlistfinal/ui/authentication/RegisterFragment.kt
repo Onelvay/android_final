@@ -28,12 +28,13 @@ class RegisterFragment : Fragment() {
             val username = binding.etUsername.text.toString()
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            if (username.isEmpty() || password.isEmpty()) {
+            val fullName = binding.etFullName.text.toString()
+            if (username.isEmpty() || password.isEmpty() || fullName.isEmpty()) {
                 Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
-            if (userRepository.register(username, password)) {
+            if (userRepository.register(username, password, fullName)) {
                 Toast.makeText(requireContext(), "Registration successful", Toast.LENGTH_SHORT)
                     .show()
                 // Navigate back to LoginFragment

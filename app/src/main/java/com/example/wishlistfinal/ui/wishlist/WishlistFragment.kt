@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.wishlistfinal.R
 import com.example.wishlistfinal.data.local.AppDatabase
 import com.example.wishlistfinal.databinding.FragmentWishlistBinding
 import com.example.wishlistfinal.repository.BookRepository
+import com.example.wishlistfinal.repository.UserRepository
 import com.example.wishlistfinal.ui.adapters.BooksAdapter
 
 class WishlistFragment : Fragment() {
@@ -20,12 +22,28 @@ class WishlistFragment : Fragment() {
 
     private lateinit var viewModel: WishlistViewModel
     private lateinit var adapter: BooksAdapter
+    private lateinit var userRepository: UserRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentWishlistBinding.inflate(inflater, container, false)
+        userRepository = UserRepository(requireContext())
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (!userRepository.isLoggedIn()) {
+            Toast.makeText(requireContext(), "Please log in to access Wishlist", Toast.LENGTH_SHORT).show()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, com.example.wishlistfinal.ui.authentication.LoginFragment())
+                .commit()
+            return
+        }
+
         val dao = AppDatabase.getDatabase(requireContext()).bookDao()
         val repository = BookRepository(dao)
         val factory = WishlistViewModelFactory(repository)
@@ -33,8 +51,6 @@ class WishlistFragment : Fragment() {
 
         setupRecyclerView()
         setupObservers()
-
-        return binding.root
     }
 
     private fun setupRecyclerView() {
