@@ -9,15 +9,9 @@ class BookRepository(private val bookDao: BookDao) {
 
     val wishlist: LiveData<List<Book>> = bookDao.getAllBooks()
 
-    suspend fun searchBooks(query: String) = RetrofitInstance.api.searchBooks(query, 20)
+    suspend fun searchBooks(query: String) = RetrofitInstance.api.searchBooks(query)
 
-    suspend fun getBookDetails(bookId: String) = RetrofitInstance.api.getBookDetails(bookId)
+    suspend fun addToWishlist(book: Book) = bookDao.insert(book)
 
-    suspend fun addToWishlist(book: Book) {
-        bookDao.insert(book)
-    }
-
-    suspend fun removeFromWishlist(book: Book) {
-        bookDao.delete(book)
-    }
+    suspend fun removeFromWishlist(book: Book) = bookDao.delete(book)
 } 
