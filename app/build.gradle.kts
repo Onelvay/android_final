@@ -45,7 +45,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+   ksp("com.github.bumptech.glide:compiler:4.16.0")
+   
     // Room dependencies
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")

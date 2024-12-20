@@ -11,6 +11,7 @@ import com.example.wishlistfinal.ui.wishlist.WishlistFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var currentFragmentTag: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,25 +19,27 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Start with LoginFragment
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentContainer.id, LoginFragment())
-                .commit()
+            navigateToFragment(BooksFragment(), "books")
         }
 
+        setupBottomNavigation()
+    }
+
+    private fun setupBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_books -> {
-                    navigateToFragment(BooksFragment())
+                    val isBackNavigation = currentFragmentTag == "wishlist"
+                    navigateToFragment(BooksFragment(), "books", isBackNavigation)
                     true
                 }
                 R.id.nav_wishlist -> {
-                    navigateToFragment(WishlistFragment())
+                    navigateToFragment(WishlistFragment(), "wishlist", false)
                     true
                 }
                 R.id.nav_login -> {
-                    navigateToFragment(LoginFragment())
+                    navigateToFragment(LoginFragment(), "login", false)
                     true
                 }
                 else -> false
@@ -44,16 +47,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.slide_out_left,
+    private fun navigateToFragment(fragment: Fragment, tag: String, isBackNavigation: Boolean = false) {
+        val transaction = supportFragmentManager.beginTransaction()
+        
+        if (isBackNavigation) {
+            transaction.setCustomAnimations(
                 R.anim.slide_in_left,
                 R.anim.slide_out_right
             )
-            .replace(binding.fragmentContainer.id, fragment)
-            .addToBackStack(null)
-            .commit()
+        } else {
+            transaction.setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+            )
+        }
+
+        transaction.replace(R.id.fragment_container, fragment, tag)
+        transaction.commit()
+        
+        currentFragmentTag = tag
     }
 } 

@@ -8,6 +8,6 @@ interface ApiService {
     @GET("volumes")
     suspend fun searchBooks(
         @Query("q") query: String,
-        @Query("key") apiKey: String = "AIzaSyAoriFQBU93K4kd9NOZgYZMh_BijwL6sdQ"  // Replace with your Google Books API key
+        @Query("key") apiKey: String = "AIzaSyD5GqZ7cwdDVMLhJFtQRYBTI_zFdY4NwSQ" 
     ): BookResponse
 } 

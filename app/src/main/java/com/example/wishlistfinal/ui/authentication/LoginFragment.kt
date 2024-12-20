@@ -39,7 +39,7 @@ class LoginFragment : Fragment() {
                         R.anim.slide_in_left,
                         R.anim.slide_out_right
                     )
-                    .replace(R.id.fragmentContainer, BooksFragment())
+                    .replace(R.id.fragment_container, BooksFragment())
                     .commit()
             } else {
                 Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
                     R.anim.slide_in_left,
                     R.anim.slide_out_right
                 )
-                .replace(R.id.fragmentContainer, RegisterFragment())
+                .replace(R.id.fragment_container, RegisterFragment())
                 .addToBackStack(null)
                 .commit()
         }

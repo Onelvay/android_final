@@ -5,22 +5,29 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.wishlistfinal.data.model.Book
 import com.example.wishlistfinal.databinding.ItemBookBinding
-import com.bumptech.glide.Glide
 
 class BooksAdapter(private val onAddToWishlist: (Book) -> Unit) :
     ListAdapter<Book, BooksAdapter.BookViewHolder>(BookDiffCallback()) {
 
     inner class BookViewHolder(private val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        
         fun bind(book: Book) {
             binding.apply {
                 tvTitle.text = book.title
                 tvAuthor.text = book.authors
+
+                // Load image with Glide
                 Glide.with(ivThumbnail.context)
-                    .load(book.imageUrl)
+                    .load(book.imageUrl.replace("http://", "https://"))  // Force HTTPS
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .centerCrop()
                     .into(ivThumbnail)
+
                 btnAdd.setOnClickListener {
                     onAddToWishlist(book)
                 }
