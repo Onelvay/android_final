@@ -68,7 +68,8 @@ class BooksFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
                 Log.d("BooksFragment", "Fragment transaction committed")
-            }
+            },
+            isWishlistView = false
         )
         binding.recyclerViewBooks.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewBooks.adapter = adapter
