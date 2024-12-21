@@ -20,7 +20,7 @@ class BooksAdapter(
         
         init {
             binding.root.setOnClickListener {
-                val position = bindingAdapterPosition
+                val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onItemClick(getItem(position))
                 }
@@ -53,7 +53,11 @@ class BooksAdapter(
     }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val book = getItem(position)
+        holder.bind(book)
+        holder.itemView.setOnClickListener {
+            onItemClick(book)
+        }
     }
 }
 
