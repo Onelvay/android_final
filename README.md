@@ -49,19 +49,8 @@ git clone https://github.com/yourusername/wishlist.git
 4. Build and run the application
 
 ## Project Structure
-app/
-├── data/
-│ ├── local/ # Room Database, DAOs
-│ ├── remote/ # API Service
-│ └── model/ # Data models
-├── repository/ # Data repositories
-├── ui/
-│ ├── authentication/ # Login/Register
-│ ├── books/ # Book search
-│ ├── wishlist/ # Wishlist management
-│ └── adapters/ # RecyclerView adapters
-└── utils/ # Utility classes
 
+![image](https://github.com/user-attachments/assets/9ed648c2-a617-4df8-9060-a10f1529580f)
 
 ## Architecture
 
