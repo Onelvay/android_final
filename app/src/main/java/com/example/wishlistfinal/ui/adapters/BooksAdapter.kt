@@ -18,6 +18,15 @@ class BooksAdapter(
     inner class BookViewHolder(private val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
         
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(getItem(position))
+                }
+            }
+        }
+        
         fun bind(book: Book) {
             binding.apply {
                 tvTitle.text = book.title
@@ -29,11 +38,6 @@ class BooksAdapter(
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .centerCrop()
                     .into(ivThumbnail)
-
-                // Add click listener to the entire item
-                root.setOnClickListener {
-                    onItemClick(book)
-                }
 
                 btnAdd.setOnClickListener {
                     onAddToWishlist(book)

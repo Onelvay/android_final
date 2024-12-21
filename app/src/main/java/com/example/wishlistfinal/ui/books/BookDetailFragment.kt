@@ -25,10 +25,15 @@ class BookDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("BookDetailFragment", "onViewCreated")
-        arguments?.getParcelable<Book>("book")?.let { book ->
-            Log.d("BookDetailFragment", "Book received: ${book.title}")
-            setupBookDetails(book)
+        val book = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable("book", Book::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            arguments?.getParcelable("book")
+        }
+        
+        book?.let {
+            setupBookDetails(it)
         } ?: run {
             Log.e("BookDetailFragment", "No book data received")
         }
