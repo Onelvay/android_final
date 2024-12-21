@@ -54,9 +54,25 @@ class WishlistFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = BooksAdapter { book ->
-            viewModel.removeFromWishlist(book)
-        }
+        adapter = BooksAdapter(
+            onAddToWishlist = { book ->
+                viewModel.removeFromWishlist(book)
+                Toast.makeText(requireContext(), "Book removed from wishlist", Toast.LENGTH_SHORT).show()
+            },
+            onItemClick = { book ->
+                val detailFragment = BookDetailFragment.newInstance(book)
+                parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
+                    .replace(R.id.fragment_container, detailFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        )
         binding.recyclerViewWishlist.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewWishlist.adapter = adapter
     }

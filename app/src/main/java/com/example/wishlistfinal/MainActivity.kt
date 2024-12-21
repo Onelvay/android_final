@@ -42,23 +42,25 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_books -> {
-                    val isBackNavigation = currentFragmentTag == "wishlist"
+                    val isBackNavigation = currentFragmentTag == "wishlist" || currentFragmentTag == "profile"
                     navigateToFragment(BooksFragment(), "books", isBackNavigation)
                     true
                 }
                 R.id.nav_wishlist -> {
+                    val isBackNavigation = currentFragmentTag == "profile"
                     if (userRepository.isLoggedIn()) {
-                        navigateToFragment(WishlistFragment(), "wishlist", false)
+                        navigateToFragment(WishlistFragment(), "wishlist", isBackNavigation)
                     } else {
                         navigateToFragment(LoginFragment(), "login", false)
                     }
                     true
                 }
                 R.id.nav_login -> {
+                    val isBackNavigation = false
                     if (userRepository.isLoggedIn()) {
-                        navigateToFragment(ProfileFragment(), "profile", false)
+                        navigateToFragment(ProfileFragment(), "profile", isBackNavigation)
                     } else {
-                        navigateToFragment(LoginFragment(), "login", false)
+                        navigateToFragment(LoginFragment(), "login", isBackNavigation)
                     }
                     true
                 }
