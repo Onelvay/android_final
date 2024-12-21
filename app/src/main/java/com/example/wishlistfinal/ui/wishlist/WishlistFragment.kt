@@ -14,6 +14,7 @@ import com.example.wishlistfinal.databinding.FragmentWishlistBinding
 import com.example.wishlistfinal.repository.BookRepository
 import com.example.wishlistfinal.repository.UserRepository
 import com.example.wishlistfinal.ui.adapters.BooksAdapter
+import com.example.wishlistfinal.ui.books.BookDetailFragment
 
 class WishlistFragment : Fragment() {
 

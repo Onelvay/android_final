@@ -42,6 +42,7 @@ class BooksAdapter(
                 btnAdd.setOnClickListener {
                     onAddToWishlist(book)
                 }
+
             }
         }
     }
