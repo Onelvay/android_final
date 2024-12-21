@@ -69,11 +69,13 @@ class BooksFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
                 Log.d("BooksFragment", "Fragment transaction committed")
-            }
+            },
+            isWishlistView = false
         )
         binding.recyclerViewBooks.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewBooks.adapter = adapter
     }
+
 
     private fun setupObservers() {
         viewModel.searchResults.observe(viewLifecycleOwner) { resource ->

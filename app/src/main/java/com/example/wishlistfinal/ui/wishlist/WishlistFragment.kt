@@ -72,11 +72,13 @@ class WishlistFragment : Fragment() {
                     .replace(R.id.fragment_container, detailFragment)
                     .addToBackStack(null)
                     .commit()
-            }
+            },
+            isWishlistView = true
         )
         binding.recyclerViewWishlist.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewWishlist.adapter = adapter
     }
+
 
     private fun setupObservers() {
         viewModel.wishlist.observe(viewLifecycleOwner) { books ->
