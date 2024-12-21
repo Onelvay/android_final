@@ -19,31 +19,34 @@ class BooksAdapter(
     inner class BookViewHolder(private val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
         
-        init {
-            binding.root.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClick(getItem(position))
-                }
-            }
-        }
-        
         fun bind(book: Book) {
             binding.apply {
                 tvTitle.text = book.title
                 tvAuthor.text = book.authors
 
-                // Set button text based on view type
-                btnAdd.text = if (isWishlistView) "REMOVE" else "ADD TO WISHLIST"
+                // Set button text and click listener based on view type
+                if (isWishlistView) {
+                    btnAdd.text = "REMOVE"
+                    btnAdd.setOnClickListener {
+                        onAddToWishlist(book) // This will be removeFromWishlist in WishlistFragment
+                    }
+                } else {
+                    btnAdd.text = "ADD TO WISHLIST"
+                    btnAdd.setOnClickListener {
+                        onAddToWishlist(book)
+                    }
+                }
 
+                // Set image
                 Glide.with(ivThumbnail.context)
                     .load(book.imageUrl.replace("http://", "https://"))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .centerCrop()
                     .into(ivThumbnail)
 
-                btnAdd.setOnClickListener {
-                    onAddToWishlist(book)
+                // Set click listener for the whole item
+                root.setOnClickListener {
+                    onItemClick(book)
                 }
             }
         }
@@ -56,8 +59,7 @@ class BooksAdapter(
     }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val book = getItem(position)
-        holder.bind(book)
+        holder.bind(getItem(position))
     }
 }
 
