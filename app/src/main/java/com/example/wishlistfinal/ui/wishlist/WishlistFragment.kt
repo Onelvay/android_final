@@ -39,7 +39,7 @@ class WishlistFragment : Fragment() {
         if (!userRepository.isLoggedIn()) {
             Toast.makeText(requireContext(), "Please log in to access Wishlist", Toast.LENGTH_SHORT).show()
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, com.example.wishlistfinal.ui.authentication.LoginFragment())
+                .replace(R.id.fragment_container, com.example.wishlistfinal.ui.authentication.LoginFragment())
                 .commit()
             return
         }

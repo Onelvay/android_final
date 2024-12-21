@@ -64,7 +64,7 @@ class ProfileFragment : Fragment() {
                 userRepository.logout()
                 Toast.makeText(requireContext(), "Logged out", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, com.example.wishlistfinal.ui.authentication.LoginFragment())
+                    .replace(R.id.fragment_container, com.example.wishlistfinal.ui.authentication.LoginFragment())
                     .commit()
                 true
             }

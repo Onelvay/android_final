@@ -8,6 +8,6 @@ interface ApiService {
     @GET("volumes")
     suspend fun searchBooks(
         @Query("q") query: String,
-        @Query("key") apiKey: String = "" 
+        @Query("key") apiKey: String = "AIzaSyCeL0OTD3_6pzbQIlNRTfGzEnqcgT64Xps"
     ): BookResponse
 } 
