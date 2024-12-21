@@ -94,6 +94,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         transaction.replace(R.id.fragment_container, fragment, tag)
+        if (tag != "books") {
+            transaction.addToBackStack(tag)
+        }
         transaction.commit()
 
         currentFragmentTag = tag

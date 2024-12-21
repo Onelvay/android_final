@@ -10,14 +10,17 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.wishlistfinal.data.model.Book
 import com.example.wishlistfinal.databinding.ItemBookBinding
 
-class BooksAdapter(private val onAddToWishlist: (Book) -> Unit) :
-    ListAdapter<Book, BooksAdapter.BookViewHolder>(BookDiffCallback()) {
+class BooksAdapter(
+    private val onAddToWishlist: (Book) -> Unit,
+    private val onItemClick: (Book) -> Unit
+) : ListAdapter<Book, BooksAdapter.BookViewHolder>(BookDiffCallback()) {
 
     inner class BookViewHolder(private val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
         
         fun bind(book: Book) {
             binding.apply {
+                root.setOnClickListener { onItemClick(book) }
                 tvTitle.text = book.title
                 tvAuthor.text = book.authors
 

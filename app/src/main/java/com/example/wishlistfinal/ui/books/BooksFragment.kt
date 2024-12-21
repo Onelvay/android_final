@@ -49,10 +49,24 @@ class BooksFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = BooksAdapter { book ->
-            viewModel.addToWishlist(book)
-            Toast.makeText(requireContext(), "Book added to wishlist", Toast.LENGTH_SHORT).show()
-        }
+        adapter = BooksAdapter(
+            onAddToWishlist = { book ->
+                viewModel.addToWishlist(book)
+                Toast.makeText(requireContext(), "Book added to wishlist", Toast.LENGTH_SHORT).show()
+            },
+            onItemClick = { book ->
+                parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
+                    .replace(R.id.fragment_container, BookDetailFragment.newInstance(book))
+                    .addToBackStack(null)
+                    .commit()
+            }
+        )
         binding.recyclerViewBooks.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewBooks.adapter = adapter
     }
