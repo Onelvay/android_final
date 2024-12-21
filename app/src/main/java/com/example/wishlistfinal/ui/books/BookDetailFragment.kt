@@ -1,6 +1,7 @@
 package com.example.wishlistfinal.ui.books
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +25,12 @@ class BookDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("BookDetailFragment", "onViewCreated")
         arguments?.getParcelable<Book>("book")?.let { book ->
+            Log.d("BookDetailFragment", "Book received: ${book.title}")
             setupBookDetails(book)
+        } ?: run {
+            Log.e("BookDetailFragment", "No book data received")
         }
     }
 

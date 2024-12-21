@@ -55,6 +55,8 @@ class BooksFragment : Fragment() {
                 Toast.makeText(requireContext(), "Book added to wishlist", Toast.LENGTH_SHORT).show()
             },
             onItemClick = { book ->
+                Log.d("BooksFragment", "Book clicked: ${book.title}")
+                val detailFragment = BookDetailFragment.newInstance(book)
                 parentFragmentManager.beginTransaction()
                     .setCustomAnimations(
                         R.anim.slide_in_right,
@@ -62,9 +64,10 @@ class BooksFragment : Fragment() {
                         R.anim.slide_in_left,
                         R.anim.slide_out_right
                     )
-                    .replace(R.id.fragment_container, BookDetailFragment.newInstance(book))
+                    .replace(R.id.fragment_container, detailFragment)
                     .addToBackStack(null)
                     .commit()
+                Log.d("BooksFragment", "Fragment transaction committed")
             }
         )
         binding.recyclerViewBooks.layoutManager = LinearLayoutManager(requireContext())

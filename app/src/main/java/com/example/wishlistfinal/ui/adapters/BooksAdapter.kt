@@ -20,16 +20,20 @@ class BooksAdapter(
         
         fun bind(book: Book) {
             binding.apply {
-                root.setOnClickListener { onItemClick(book) }
                 tvTitle.text = book.title
                 tvAuthor.text = book.authors
 
                 // Load image with Glide
                 Glide.with(ivThumbnail.context)
-                    .load(book.imageUrl.replace("http://", "https://"))  // Force HTTPS
+                    .load(book.imageUrl.replace("http://", "https://"))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .centerCrop()
                     .into(ivThumbnail)
+
+                // Add click listener to the entire item
+                root.setOnClickListener {
+                    onItemClick(book)
+                }
 
                 btnAdd.setOnClickListener {
                     onAddToWishlist(book)
