@@ -74,6 +74,7 @@ class BooksFragment : Fragment() {
         binding.recyclerViewBooks.adapter = adapter
     }
 
+
     private fun setupObservers() {
         viewModel.searchResults.observe(viewLifecycleOwner) { resource ->
             Log.d("BooksFragment", "Received resource: $resource")

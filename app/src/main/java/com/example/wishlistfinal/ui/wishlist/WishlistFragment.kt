@@ -77,6 +77,7 @@ class WishlistFragment : Fragment() {
         binding.recyclerViewWishlist.adapter = adapter
     }
 
+
     private fun setupObservers() {
         viewModel.wishlist.observe(viewLifecycleOwner) { books ->
             adapter.submitList(books)

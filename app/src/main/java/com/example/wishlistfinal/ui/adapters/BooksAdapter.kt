@@ -12,7 +12,8 @@ import com.example.wishlistfinal.databinding.ItemBookBinding
 
 class BooksAdapter(
     private val onAddToWishlist: (Book) -> Unit,
-    private val onItemClick: (Book) -> Unit
+    private val onItemClick: (Book) -> Unit,
+    private val isWishlistView: Boolean = false
 ) : ListAdapter<Book, BooksAdapter.BookViewHolder>(BookDiffCallback()) {
 
     inner class BookViewHolder(private val binding: ItemBookBinding) :
@@ -32,7 +33,9 @@ class BooksAdapter(
                 tvTitle.text = book.title
                 tvAuthor.text = book.authors
 
-                // Load image with Glide
+                // Set button text based on view type
+                btnAdd.text = if (isWishlistView) "REMOVE" else "ADD TO WISHLIST"
+
                 Glide.with(ivThumbnail.context)
                     .load(book.imageUrl.replace("http://", "https://"))
                     .transition(DrawableTransitionOptions.withCrossFade())
@@ -55,9 +58,6 @@ class BooksAdapter(
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book = getItem(position)
         holder.bind(book)
-        holder.itemView.setOnClickListener {
-            onItemClick(book)
-        }
     }
 }
 
